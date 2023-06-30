@@ -129,6 +129,7 @@ export class Tile {
     entropy: number; // A value between 0-10
     configuration: Configuration; // Tells us what pieces could go here
     possibilities: string[];
+    collapsed: boolean;
 
     constructor() {
         this.entropy = 10;
@@ -138,6 +139,7 @@ export class Tile {
             down: undefined,
             left: undefined,
         };
+        this.collapsed = false;
         this.possibilities = [];
         this.updateEntropy();
     }
