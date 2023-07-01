@@ -131,7 +131,8 @@ class Grid {
             }
             process.stdout.write("\n");
         }
-        process.stdout.write("\n");
+        process.stdout.write("\n\n\n");
+        await sleep(500);
     }
 }
 
