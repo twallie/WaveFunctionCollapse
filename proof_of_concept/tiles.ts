@@ -219,14 +219,6 @@ export class Tile {
         const randomIndex = Math.floor(Math.random() * length);
         const choice = this.possibilities[randomIndex];
 
-        console.log(
-            "COLLAPING PIECE!",
-            this.configuration,
-            this.possibilities,
-            choice.symbol
-        );
-        console.log("");
-
         this.collapsed = true;
         this.shown = choice.symbol;
         this.configuration = choice.configuration;
