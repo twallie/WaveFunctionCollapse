@@ -1,16 +1,15 @@
 // configuration is in the form of [up, down, right, left]
 
-export const symbols = [
-    {
-        symbol: " ",
-        configuration: {
-            up: false,
-            right: false,
-            down: false,
-            left: false,
-        },
-    },
-
+interface SymbolData {
+    symbol: string;
+    configuration: {
+        up: boolean;
+        right: boolean;
+        down: boolean;
+        left: boolean;
+    };
+}
+export const symbols: SymbolData[] = [
     {
         symbol: "═",
         configuration: {
@@ -128,8 +127,9 @@ interface Configuration {
 export class Tile {
     entropy: number; // A value between 0-10
     configuration: Configuration; // Tells us what pieces could go here
-    possibilities: string[];
+    possibilities: SymbolData[];
     collapsed: boolean;
+    shown: string;
 
     constructor() {
         this.entropy = 10;
@@ -141,6 +141,7 @@ export class Tile {
         };
         this.collapsed = false;
         this.possibilities = [];
+        this.shown = "x";
         this.updateEntropy();
     }
 
@@ -185,7 +186,12 @@ export class Tile {
     }
 
     updateEntropy() {
-        let newPossibilities: string[] = [];
+        if (this.collapsed) {
+            this.entropy = 0;
+            return;
+        }
+
+        let newPossibilities: SymbolData[] = [];
 
         symbols.forEach((can) => {
             // can == candidate
@@ -196,7 +202,7 @@ export class Tile {
                 compatible(can.configuration.down, this.configuration.down) &&
                 compatible(can.configuration.left, this.configuration.left)
             ) {
-                newPossibilities.push(can.symbol);
+                newPossibilities.push(can);
             }
         });
 
@@ -206,6 +212,24 @@ export class Tile {
         function compatible(desired: boolean, current?: boolean) {
             return current == undefined || current == desired;
         }
+    }
+
+    collapse() {
+        const length = this.possibilities.length;
+        const randomIndex = Math.floor(Math.random() * length);
+        const choice = this.possibilities[randomIndex];
+
+        console.log(
+            "COLLAPING PIECE!",
+            this.configuration,
+            this.possibilities,
+            choice.symbol
+        );
+        console.log("");
+
+        this.collapsed = true;
+        this.shown = choice.symbol;
+        this.configuration = choice.configuration;
     }
 }
 
