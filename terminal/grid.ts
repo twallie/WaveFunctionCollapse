@@ -7,7 +7,6 @@ class Grid {
     constructor(dimensions: number) {
         this.dimensions = dimensions;
 
-        let count = 0;
         this.array = new Array(this.dimensions);
         for (let y = this.dimensions - 1; y >= 0; y--) {
             this.array[y] = new Array(this.dimensions);
