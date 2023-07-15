@@ -51,6 +51,7 @@ class Tile {
         this.configuration = choice.configuration;
         this.entropy = 1;
         this.collapsed = true;
+        this.shown = choice.ascii;
     }
 
     private refresh() {
