@@ -3,7 +3,7 @@ import { Symbol, completeSymbolList, pruneSymbolArray } from "./symbol";
 class Tile {
     configuration: TileConfiguration;
 
-    shown: string | undefined;
+    shown: string;
 
     possibilities: Symbol[];
     entropy: number;
@@ -17,7 +17,7 @@ class Tile {
             left: undefined,
         };
 
-        this.shown = undefined;
+        this.shown = " ";
 
         this.possibilities = completeSymbolList;
         this.entropy = this.possibilities.length;
