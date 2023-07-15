@@ -1,4 +1,4 @@
 import { Grid } from "../grid";
 
-const grid = new Grid(3);
-grid.printGrid();
+const grid = new Grid(25);
+grid.run();
