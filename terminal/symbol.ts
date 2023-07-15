@@ -1,3 +1,5 @@
+import { TileConfiguration } from "./tile";
+
 interface SymbolConfiguration {
     up: boolean;
     right: boolean;
@@ -10,7 +12,29 @@ interface Symbol {
     configuration: SymbolConfiguration;
 }
 
-// TODO: Write function that given a TileConfiguration, it returns all valid symbols in the completeSymbolList that are compatible
+function pruneSymbolArray(array: Symbol[], tile: TileConfiguration): Symbol[] {
+    const newArray: Symbol[] = [];
+    for (let i = 0; i < array.length; i++) {
+        if (!compatible(tile, array[i].configuration)) {
+            continue;
+        }
+        newArray.push(array[i]);
+    }
+    return newArray;
+
+    function compatible(tile: TileConfiguration, symbol: SymbolConfiguration) {
+        const tileSides = [tile.up, tile.right, tile.down, tile.left];
+        const symbolSides = [symbol.up, symbol.right, symbol.down, symbol.left];
+        for (let i = 0; i < 4; i++) {
+            if (tileSides[i] != undefined) {
+                if (tileSides[i] != symbolSides[i]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}
 
 const completeSymbolList: Symbol[] = [
     {
@@ -40,7 +64,6 @@ const completeSymbolList: Symbol[] = [
             left: false,
         },
     },
-
     {
         ascii: "╗",
         configuration: {
@@ -50,7 +73,6 @@ const completeSymbolList: Symbol[] = [
             left: true,
         },
     },
-
     {
         ascii: "╚",
         configuration: {
@@ -60,7 +82,6 @@ const completeSymbolList: Symbol[] = [
             left: false,
         },
     },
-
     {
         ascii: "╝",
         configuration: {
@@ -70,7 +91,6 @@ const completeSymbolList: Symbol[] = [
             left: true,
         },
     },
-
     {
         ascii: "╠",
         configuration: {
@@ -80,7 +100,6 @@ const completeSymbolList: Symbol[] = [
             left: false,
         },
     },
-
     {
         ascii: "╣",
         configuration: {
@@ -90,7 +109,6 @@ const completeSymbolList: Symbol[] = [
             left: true,
         },
     },
-
     {
         ascii: "╬",
         configuration: {
@@ -100,7 +118,6 @@ const completeSymbolList: Symbol[] = [
             left: true,
         },
     },
-
     {
         ascii: "╦",
         configuration: {
@@ -110,7 +127,17 @@ const completeSymbolList: Symbol[] = [
             left: true,
         },
     },
+    {
+        ascii: "╩",
+        configuration: {
+            up: true,
+            right: true,
+            down: false,
+            left: true,
+        },
+    },
 ];
 
 export { completeSymbolList };
-export { Symbol };
+export { pruneSymbolArray };
+export type { Symbol };
