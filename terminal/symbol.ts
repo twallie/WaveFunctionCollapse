@@ -136,6 +136,15 @@ const completeSymbolList: Symbol[] = [
             left: true,
         },
     },
+    {
+        ascii: "╬",
+        configuration: {
+            up: true,
+            right: true,
+            down: true,
+            left: true,
+        },
+    },
 ];
 
 export { completeSymbolList };
