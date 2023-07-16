@@ -2,18 +2,21 @@ import { Tile } from "./tile";
 
 class Grid {
     array: Tile[][];
-    dimensions: number;
 
     uncollapsed: number;
 
-    constructor(dimensions: number) {
-        this.dimensions = dimensions;
-        this.uncollapsed = this.dimensions * this.dimensions;
+    height: number;
+    length: number;
 
-        this.array = new Array(this.dimensions);
-        for (let y = this.dimensions - 1; y >= 0; y--) {
-            this.array[y] = new Array(this.dimensions);
-            for (let x = 0; x < this.dimensions; x++) {
+    constructor(height: number, length: number) {
+        this.height = height;
+        this.length = length;
+        this.uncollapsed = this.height * this.length;
+
+        this.array = new Array(height);
+        for (let y = height - 1; y >= 0; y--) {
+            this.array[y] = new Array(length);
+            for (let x = 0; x < length; x++) {
                 this.array[y][x] = new Tile(x, y);
             }
         }
@@ -45,7 +48,7 @@ class Grid {
         this.printGridWithText([` - Took ${result} seconds to execute.`]);
     }
 
-    propagate(tile: Tile) {
+    private propagate(tile: Tile) {
         if (
             tile.configuration.up == undefined ||
             tile.configuration.right == undefined ||
@@ -76,11 +79,11 @@ class Grid {
         }
     }
 
-    withinBounds(x: number, y: number) {
-        if (x >= this.dimensions || x < 0) {
+    private withinBounds(x: number, y: number) {
+        if (x >= this.length || x < 0) {
             return false;
         }
-        if (y >= this.dimensions || y < 0) {
+        if (y >= this.height || y < 0) {
             return false;
         }
         return true;
@@ -89,8 +92,8 @@ class Grid {
     private findSmallestEntropyTiles(): Tile[] {
         let smallestEntropy = Infinity;
         let result: Tile[] = [];
-        for (let y = 0; y < this.dimensions; y++) {
-            for (let x = 0; x < this.dimensions; x++) {
+        for (let y = 0; y < this.height; y++) {
+            for (let x = 0; x < this.length; x++) {
                 const tile = this.array[y][x];
                 if (tile.collapsed) {
                     continue;
@@ -109,9 +112,9 @@ class Grid {
 
     private printGridWithText(textArray: string[]) {
         let messageIndex = 0;
-        for (let y = this.dimensions - 1; y >= 0; y--) {
+        for (let y = this.height - 1; y >= 0; y--) {
             process.stdout.write("\n");
-            for (let x = 0; x < this.dimensions; x++) {
+            for (let x = 0; x < this.length; x++) {
                 process.stdout.write(String(this.array[y][x].shown));
             }
             if (messageIndex < textArray.length) {
@@ -122,9 +125,9 @@ class Grid {
     }
 
     public printGrid() {
-        for (let y = this.dimensions - 1; y >= 0; y--) {
+        for (let y = this.height - 1; y >= 0; y--) {
             process.stdout.write("\n");
-            for (let x = 0; x < this.dimensions; x++) {
+            for (let x = 0; x < this.length; x++) {
                 process.stdout.write(String(this.array[y][x].shown));
             }
         }

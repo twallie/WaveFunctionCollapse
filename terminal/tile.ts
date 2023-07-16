@@ -30,24 +30,24 @@ class Tile {
         this.collapsed = false;
     }
 
-    setUp(value: boolean) {
+    public setUp(value: boolean) {
         this.configuration.up = value;
         this.refresh();
     }
-    setRight(value: boolean) {
+    public setRight(value: boolean) {
         this.configuration.right = value;
         this.refresh();
     }
-    setDown(value: boolean) {
+    public setDown(value: boolean) {
         this.configuration.down = value;
         this.refresh();
     }
-    setLeft(value: boolean) {
+    public setLeft(value: boolean) {
         this.configuration.left = value;
         this.refresh();
     }
 
-    collapse() {
+    public collapse() {
         // Choose random element
         let choiceIndex = Math.floor(Math.random() * this.possibilities.length);
         let choice = this.possibilities[choiceIndex];
