@@ -20,8 +20,9 @@ class Grid {
     }
 
     public run() {
+        const start = performance.now();
+
         while (this.uncollapsed != 0) {
-            console.clear();
             // Collapse random tile w/ lowest entropy
             const options = this.findSmallestEntropyTiles();
             const choice = options[Math.floor(Math.random() * options.length)];
@@ -33,7 +34,15 @@ class Grid {
 
             // Print
             this.printGrid();
+            console.clear();
         }
+
+        const end = performance.now();
+        const elapsed = end - start;
+
+        const result = (Math.round((elapsed / 1000) * 100) / 100).toFixed(2);
+
+        this.printGridWithText([` - Took ${result} seconds to execute.`]);
     }
 
     propagate(tile: Tile) {
@@ -96,6 +105,20 @@ class Grid {
             }
         }
         return result;
+    }
+
+    private printGridWithText(textArray: string[]) {
+        let messageIndex = 0;
+        for (let y = this.dimensions - 1; y >= 0; y--) {
+            process.stdout.write("\n");
+            for (let x = 0; x < this.dimensions; x++) {
+                process.stdout.write(String(this.array[y][x].shown));
+            }
+            if (messageIndex < textArray.length) {
+                process.stdout.write(textArray[messageIndex++]);
+            }
+        }
+        process.stdout.write("\n");
     }
 
     public printGrid() {
