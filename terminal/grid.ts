@@ -8,7 +8,7 @@ class Grid {
     height: number;
     length: number;
 
-    constructor(height: number, length: number) {
+    constructor(height: number, length: number, goOffscreen: boolean) {
         this.height = height;
         this.length = length;
         this.uncollapsed = this.height * this.length;
@@ -18,6 +18,17 @@ class Grid {
             this.array[y] = new Array(length);
             for (let x = 0; x < length; x++) {
                 this.array[y][x] = new Tile(x, y);
+            }
+        }
+
+        if (!goOffscreen) {
+            for (let x = 0; x < this.length; x++) {
+                this.array[this.height - 1][x].setUp(false);
+                this.array[0][x].setDown(false);
+            }
+            for (let y = 0; y < this.height; y++) {
+                this.array[y][0].setLeft(false);
+                this.array[y][this.length - 1].setRight(false);
             }
         }
     }
