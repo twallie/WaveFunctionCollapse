@@ -145,6 +145,15 @@ const completeSymbolList: Symbol[] = [
             left: true,
         },
     },
+    {
+        ascii: " ",
+        configuration: {
+            up: false,
+            right: false,
+            down: false,
+            left: false,
+        },
+    },
 ];
 
 export { completeSymbolList };
