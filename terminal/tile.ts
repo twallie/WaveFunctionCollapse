@@ -23,7 +23,7 @@ class Tile {
             left: undefined,
         };
 
-        this.shown = " ";
+        this.shown = "~";
 
         this.possibilities = completeSymbolList;
         this.entropy = this.possibilities.length;
